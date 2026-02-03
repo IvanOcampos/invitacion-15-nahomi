@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mis 15 • Nahomi Belén Ocampos Acosta</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Música YouTube ===== */
+.music-widget{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.70);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  backdrop-filter: blur(6px);
+}
+
+.music-btn{
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(232,215,173,.55), rgba(199,162,75,.12));
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-family:"Cinzel", serif;
+  letter-spacing:.10em;
+  text-transform: uppercase;
+  font-size: 11px;
+  transition: .2s ease;
+}
+
+.music-btn:hover{
+  transform: translateY(-1px);
+  background: var(--sky-soft);
+}
+
+    :root{
+      /* Gold & White (cálido) + celeste suave */
+      --ivory:#fcf6ec;
+      --champagne:#f2e6d1;
+      --paper:rgba(255,255,255,.52); /* menos blanco invasivo */
+      --text:#2b2624;
+      --muted:#6e6662;
+
+      --gold:#c7a24b;
+      --gold-soft:#e8d7ad;
+      --line: rgba(199,162,75,.35);
+
+      --sky:#9fc7f2;
+      --sky-soft: rgba(159,199,242,.18);
+
+      --shadow: 0 18px 45px rgba(0,0,0,.08);
+      --radius: 22px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Cormorant Garamond", serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 650px at 18% 0%, rgba(232,215,173,.40), transparent 62%),
+        radial-gradient(1000px 650px at 82% 0%, rgba(159,199,242,.18), transparent 68%),
+        linear-gradient(180deg, var(--ivory), var(--champagne) 60%);
+      min-height:100vh;
+    }
+
+    .wrap{
+      width:min(960px, 92vw);
+      margin: 32px auto 60px;
+    }
+
+    .card{
+      position:relative;
+      background: var(--paper);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 24px 32px;
+      overflow:hidden;
+      border: 1px solid rgba(0,0,0,.035);
+      backdrop-filter: blur(2px);
+    }
+
+    /* Esquinas florales (SVG) */
+    .corner{
+      position:absolute;
+      width: 330px;
+      height: 330px;
+      opacity: .82;              /* que SE VEAN */
+      pointer-events:none;
+      filter: saturate(1.02) contrast(1.02);
+    }
+    .corner.tl{ top:-78px; left:-78px; }
+    .corner.br{ bottom:-88px; right:-88px; transform: rotate(180deg); }
+
+    header{
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .topline{
+      font-family:"Cinzel", serif;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .title{
+      margin:10px 0 4px;
+      font-family:"Cinzel", serif;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .name{
+      font-size:44px;
+      font-style:italic;
+      font-weight:500;
+      margin:6px 0 6px;
+    }
+
+    .subtitle{
+      font-family:"Cinzel", serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .divider{
+      width:70%;
+      height:1px;
+      margin:16px auto 22px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+      position:relative;
+    }
+    .divider::after{
+      content:"";
+      display:block;
+      width:90px;
+      height:3px;
+      background: linear-gradient(90deg, transparent, var(--sky), transparent);
+      margin:-1px auto 0;
+      border-radius:99px;
+      opacity:.65;
+    }
+
+    .info{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: repeat(4,1fr);
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .box{
+      background: rgba(255,255,255,.60);
+      border-radius:16px;
+      padding:14px;
+      text-align:center;
+      border:1px solid rgba(0,0,0,.04);
+    }
+    .box small{
+      font-family:"Cinzel", serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:11px;
+      color:var(--muted);
+      display:block;
+      margin-bottom:6px;
+    }
+    .box strong{font-size:20px}
+
+    .note{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      font-size:18px;
+      color:var(--muted);
+      margin-bottom:20px;
+    }
+
+    .actions{
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      text-decoration:none;
+      font-family:"Cinzel", serif;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      font-size:12px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--text);
+      background: rgba(255,255,255,.68);
+      min-width:220px;
+      transition:.2s ease;
+      text-align:center;
+    }
+    .btn:hover{
+      background: var(--sky-soft);
+      transform: translateY(-1px);
+    }
+
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(232,215,173,.65), rgba(199,162,75,.15));
+      border-color: rgba(199,162,75,.45);
+    }
+
+    .section{
+      position:relative;
+      z-index:1;
+      margin-top:26px;
+    }
+
+    .section h2{
+      font-family:"Cinzel", serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:12px;
+    }
+    .ph{
+      border-radius:16px;
+      overflow:hidden;
+      background:#f7f2e8;
+      border:1px solid rgba(199,162,75,.22);
+      min-height:160px;
+    }
+    .ph img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    footer{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      margin-top:30px;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    @media(max-width:900px){
+      .info{grid-template-columns:1fr 1fr}
+      .gallery{grid-template-columns:1fr 1fr}
+      .name{font-size:36px}
+      .corner{width:280px;height:280px}
+    }
+    @media(max-width:520px){
+      .info,.gallery{grid-template-columns:1fr}
+      .name{font-size:30px}
+      .btn{min-width:190px}
+      .corner{width:240px;height:240px; opacity:.78}
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <section class="card">
+
+    <!-- ESQUINA FLORAL SUPERIOR IZQUIERDA -->
+    <svg class="corner tl" viewBox="0 0 420 420" aria-hidden="true">
+      <defs>
+        <linearGradient id="gGold" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stop-color="#e8d7ad" stop-opacity="0.95"/>
+          <stop offset="1" stop-color="#c7a24b" stop-opacity="0.95"/>
+        </linearGradient>
+        <linearGradient id="gSky" x1="0" x2="1" y1="1" y2="0">
+          <stop offset="0" stop-color="#9fc7f2" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#9fc7f2" stop-opacity="0.22"/>
+        </linearGradient>
+        <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="0.35"/>
+        </filter>
+
+        <!-- Pétalo -->
+        <path id="petal" d="M0,-34 C14,-30 22,-16 18,0 C14,18 0,30 0,34 C0,30 -14,18 -18,0 C-22,-16 -14,-30 0,-34 Z"/>
+        <!-- Hoja -->
+        <path id="leaf" d="M0,0 C24,-8 44,-30 52,-54 C30,-46 10,-26 0,0 Z"/>
+      </defs>
+
+      <!-- Ramitas -->
+      <g fill="none" stroke="url(#gGold)" stroke-width="2.2" stroke-linecap="round" filter="url(#soft)">
+        <path d="M70 260 C95 210 130 175 178 150 C220 128 264 120 320 110"/>
+        <path d="M60 235 C92 190 132 160 188 138 C240 118 282 112 334 106"/>
+        <path d="M90 300 C128 238 170 202 232 176 C288 152 330 145 360 140"/>
+      </g>
+
+      <!-- Hojas -->
+      <g fill="url(#gGold)" opacity="0.72">
+        <use href="#leaf" transform="translate(118 210) rotate(-32) scale(1.0)"/>
+        <use href="#leaf" transform="translate(170 182) rotate(-25) scale(0.9)"/>
+        <use href="#leaf" transform="translate(228 156) rotate(-18) scale(0.85)"/>
+        <use href="#leaf" transform="translate(140 262) rotate(-18) scale(0.9)"/>
+        <use href="#leaf" transform="translate(205 235) rotate(-10) scale(0.8)"/>
+      </g>
+
+      <!-- Flores (3) -->
+      <g transform="translate(135 185)">
+        <g fill="url(#gGold)" opacity="0.86">
+          <use href="#petal" transform="rotate(0)"/>
+          <use href="#petal" transform="rotate(60)"/>
+          <use href="#petal" transform="rotate(120)"/>
+          <use href="#petal" transform="rotate(180)"/>
+          <use href="#petal" transform="rotate(240)"/>
+          <use href="#petal" transform="rotate(300)"/>
+        </g>
+        <circle r="10" fill="url(#gSky)" opacity="0.85"/>
+        <circle r="4.8" fill="#ffffff" opacity="0.65"/>
+      </g>
+
+      <g transform="translate(210 150) scale(0.88)">
+        <g fill="url(#gGold)" opacity="0.84">
+          <use href="#petal" transform="rotate(15)"/>
+          <use href="#petal" transform="rotate(75)"/>
+          <use href="#petal" transform="rotate(135)"/>
+          <use href="#petal" transform="rotate(195)"/>
+          <use href="#petal" transform="rotate(255)"/>
+          <use href="#petal" transform="rotate(315)"/>
+        </g>
+        <circle r="9" fill="url(#gSky)" opacity="0.82"/>
+        <circle r="4.2" fill="#ffffff" opacity="0.62"/>
+      </g>
+
+      <g transform="translate(170 245) scale(0.78)">
+        <g fill="url(#gGold)" opacity="0.82">
+          <use href="#petal" transform="rotate(0)"/>
+          <use href="#petal" transform="rotate(72)"/>
+          <use href="#petal" transform="rotate(144)"/>
+          <use href="#petal" transform="rotate(216)"/>
+          <use href="#petal" transform="rotate(288)"/>
+        </g>
+        <circle r="8" fill="url(#gSky)" opacity="0.78"/>
+        <circle r="3.8" fill="#ffffff" opacity="0.6"/>
+      </g>
+
+      <!-- Puntitos/ramitas pequeñas -->
+      <g fill="#9fc7f2" opacity="0.35">
+        <circle cx="255" cy="150" r="3"/>
+        <circle cx="280" cy="135" r="2.6"/>
+        <circle cx="240" cy="170" r="2.3"/>
+      </g>
+    </svg>
+
+    <!-- ESQUINA FLORAL INFERIOR DERECHA (es la misma, rotada por CSS) -->
+    <svg class="corner br" viewBox="0 0 420 420" aria-hidden="true">
+      <defs>
+        <linearGradient id="gGold2" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stop-color="#e8d7ad" stop-opacity="0.95"/>
+          <stop offset="1" stop-color="#c7a24b" stop-opacity="0.95"/>
+        </linearGradient>
+        <linearGradient id="gSky2" x1="0" x2="1" y1="1" y2="0">
+          <stop offset="0" stop-color="#9fc7f2" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#9fc7f2" stop-opacity="0.22"/>
+        </linearGradient>
+        <filter id="soft2" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="0.35"/>
+        </filter>
+        <path id="petal2" d="M0,-34 C14,-30 22,-16 18,0 C14,18 0,30 0,34 C0,30 -14,18 -18,0 C-22,-16 -14,-30 0,-34 Z"/>
+        <path id="leaf2" d="M0,0 C24,-8 44,-30 52,-54 C30,-46 10,-26 0,0 Z"/>
+      </defs>
+
+      <g fill="none" stroke="url(#gGold2)" stroke-width="2.2" stroke-linecap="round" filter="url(#soft2)">
+        <path d="M70 260 C95 210 130 175 178 150 C220 128 264 120 320 110"/>
+        <path d="M60 235 C92 190 132 160 188 138 C240 118 282 112 334 106"/>
+        <path d="M90 300 C128 238 170 202 232 176 C288 152 330 145 360 140"/>
+      </g>
+
+      <g fill="url(#gGold2)" opacity="0.72">
+        <use href="#leaf2" transform="translate(118 210) rotate(-32) scale(1.0)"/>
+        <use href="#leaf2" transform="translate(170 182) rotate(-25) scale(0.9)"/>
+        <use href="#leaf2" transform="translate(228 156) rotate(-18) scale(0.85)"/>
+        <use href="#leaf2" transform="translate(140 262) rotate(-18) scale(0.9)"/>
+        <use href="#leaf2" transform="translate(205 235) rotate(-10) scale(0.8)"/>
+      </g>
+
+      <g transform="translate(135 185)">
+        <g fill="url(#gGold2)" opacity="0.86">
+          <use href="#petal2" transform="rotate(0)"/>
+          <use href="#petal2" transform="rotate(60)"/>
+          <use href="#petal2" transform="rotate(120)"/>
+          <use href="#petal2" transform="rotate(180)"/>
+          <use href="#petal2" transform="rotate(240)"/>
+          <use href="#petal2" transform="rotate(300)"/>
+        </g>
+        <circle r="10" fill="url(#gSky2)" opacity="0.85"/>
+        <circle r="4.8" fill="#ffffff" opacity="0.65"/>
+      </g>
+
+      <g transform="translate(210 150) scale(0.88)">
+        <g fill="url(#gGold2)" opacity="0.84">
+          <use href="#petal2" transform="rotate(15)"/>
+          <use href="#petal2" transform="rotate(75)"/>
+          <use href="#petal2" transform="rotate(135)"/>
+          <use href="#petal2" transform="rotate(195)"/>
+          <use href="#petal2" transform="rotate(255)"/>
+          <use href="#petal2" transform="rotate(315)"/>
+        </g>
+        <circle r="9" fill="url(#gSky2)" opacity="0.82"/>
+        <circle r="4.2" fill="#ffffff" opacity="0.62"/>
+      </g>
+
+      <g transform="translate(170 245) scale(0.78)">
+        <g fill="url(#gGold2)" opacity="0.82">
+          <use href="#petal2" transform="rotate(0)"/>
+          <use href="#petal2" transform="rotate(72)"/>
+          <use href="#petal2" transform="rotate(144)"/>
+          <use href="#petal2" transform="rotate(216)"/>
+          <use href="#petal2" transform="rotate(288)"/>
+        </g>
+        <circle r="8" fill="url(#gSky2)" opacity="0.78"/>
+        <circle r="3.8" fill="#ffffff" opacity="0.6"/>
+      </g>
+
+      <g fill="#9fc7f2" opacity="0.35">
+        <circle cx="255" cy="150" r="3"/>
+        <circle cx="280" cy="135" r="2.6"/>
+        <circle cx="240" cy="170" r="2.3"/>
+      </g>
+    </svg>
+
+    <header>
+      <div class="topline">Invitación</div>
+      <div class="title">Mis 15 años</div>
+      <div class="name">NAHOMI BELEN OCAMPOS ACOSTA</div>
+      <div class="subtitle">Etiqueta: Elegante</div>
+      <div class="divider"></div>
+    </header>
+
+    <div class="info">
+      <div class="box"><small>Fecha</small><strong>21 Febrero</strong></div>
+      <div class="box"><small>Hora</small><strong>20:30</strong></div>
+      <div class="box"><small>Lugar</small><strong>Las Palmeras</strong></div>
+      <div class="box"><small>Ciudad</small><strong>San Antonio</strong></div>
+    </div>
+
+    <div class="note">Será un honor contar con tu presencia 🤍</div>
+
+    <div class="actions">
+      <a class="btn" href="https://maps.google.com/?q=Las+Palmeras+San+Antonio" target="_blank" rel="noopener">📍 Ubicación</a>
+      <a class="btn primary" href="https://forms.gle/PEGA-TU-LINK-AQUI" target="_blank" rel="noopener">✅ Confirmar asistencia</a>
+    </div>
+
+    <div class="section">
+      <h2>Fotos</h2>
+      <div class="gallery">
+        <div class="ph"><img src="assets/fotos/foto1.jpg" alt="Foto 1"></div>
+        <div class="ph"><img src="assets/fotos/foto2.jpg" alt="Foto 2"></div>
+        <div class="ph"><img src="assets/fotos/foto3.jpg" alt="Foto 3"></div>
+      </div>
+    </div>
+
+    <footer>Invitación digital • Familia Ocampos Acosta</footer>
+  </section>
+</div>
+<!-- Reproductor YouTube (invisible pero válido) -->
+<!-- Reproductor YouTube (invisible) -->
+<div id="yt-wrap" style="position:fixed; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+  <div id="yt-player"></div>
+</div>
+
+<div class="music-widget">
+  <button class="music-btn" id="musicToggle" disabled>⏳ Cargando...</button>
+</div>
+
+<script>
+  const YT_VIDEO_ID = "bSUGNNLKt9c"; // <-- tu video
+  let player = null;
+  let playing = false;
+
+  const btn = document.getElementById("musicToggle");
+
+  // Cargar API de YouTube
+  const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  tag.onerror = () => {
+    btn.disabled = true;
+    btn.textContent = "⚠️ Música bloqueada";
+    console.error("No se pudo cargar la API de YouTube.");
+  };
+  document.head.appendChild(tag);
+
+  // YouTube llama esto cuando la API está lista
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player("yt-player", {
+      videoId: YT_VIDEO_ID,
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        loop: 1,
+        playlist: YT_VIDEO_ID,
+        playsinline: 1,
+        rel: 0,
+        modestbranding: 1,
+        origin: window.location.origin
+      },
+      events: {
+        onReady: () => {
+          btn.disabled = false;
+          btn.textContent = "▶ Música";
+          try { player.setVolume(35); } catch(e) {}
+        },
+        onError: (e) => {
+          btn.disabled = true;
+          btn.textContent = "⚠️ Video no disponible";
+          console.error("Error del reproductor:", e);
+        }
+      }
+    });
+  };
+
+  btn.addEventListener("click", () => {
+    if (!player) return;
+
+    try {
+      if (!playing) {
+        player.playVideo();
+        btn.textContent = "⏸ Pausar";
+        playing = true;
+      } else {
+        player.pauseVideo();
+        btn.textContent = "▶ Música";
+        playing = false;
+      }
+    } catch (e) {
+      console.error(e);
+      btn.textContent = "⚠️ No se pudo reproducir";
+    }
+  });
+</script>
+
+</body>
+</html>
